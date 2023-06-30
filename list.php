@@ -31,7 +31,7 @@ if($status==false){
 
 
 <section class="favorite_container">
-  <h2>ユーザー一覧</h2>
+  <h2>ご意見一覧</h2>
   <div class="favorite_list">
     <table style="width:80%;">
       <tr>
