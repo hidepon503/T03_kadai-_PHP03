@@ -10,15 +10,18 @@
 
 
   <?php
-  // DB接続
-  
+
+// htmlspecialcharsでXSS対策
+  function h($str){
+  return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+  }
   
 
 
-  include('./layout/header.php');
-  include('create.php');
-  include('favorite.php');
-  include('./layout/footer.php');
+  include('header.php');
+  include('insert.php');
+  include('list.php');
+  include('footer.php');
   ?>
 
 </body>

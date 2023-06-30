@@ -10,7 +10,6 @@
 function h($str){
   return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
-
 // var_dump($_FILES['file']);
 if(is_uploaded_file($_FILES['file']['tmp_name'])){
   // uploadフォルダが存在するか確認。なければ作成する。書き込み権限を付与する
@@ -18,7 +17,7 @@ if(is_uploaded_file($_FILES['file']['tmp_name'])){
     mkdir('upload');
   }
   // 画像のパスを変数に格納
-  
+  // 
   $file = 'upload/'.basename($_FILES['file']['name']);
   var_dump($file);
   // 画像をuploadフォルダに移動

@@ -1,32 +1,67 @@
-  <h1>お気に入り登録</h1>
-  <table class="" style="border:solid 1px black">
-    <form action="create.php" method="POST" enctype="multipart/form-data">
-      <tr>
-        <th><label for="name">名前</label></th>
-        <td><input type="text" id="name" name="title"></td>
-      </tr>
-      <tr>
-        <th><label for="gender">性別</label></th>
-        <td id="gender">
-          <input type="radio" id="men" name="gender" value="男"><label for="men">男</label>
-          <input type="radio" id="female" name="gender" value="女"><label for="female">女</label>
-        </td>
-      </tr>
-      <tr>
-        <th><label for="birthday">生年月日</label></th>
-        <td><input type="datetime" id="birthday" name="birthday"></td>
-      </tr>
-      <tr>
-        <th><label for="comment">コメント</label></th>
-        <td><textArea name="comment" id="comment" cols="30" rows="10"></textarea></td>
-      </tr>
-      <tr>
-        <th>写真</th>
-        <td><input type="file" name="image"></td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><input type="submit" value="登録"></td>
-      </tr>
-    </form>
-  </table>
+<?php
+// POSTできたリクエスト内容の入力チェック(受信確認処理追加)。エラー表示は。
+if(
+  !isset($_POST['name']) || $_POST['name'] == '' ||
+  !isset($_POST['gender']) || $_POST['gender'] == '' ||
+  !isset($_POST['birthday']) || $_POST['birthday'] == '' ||
+  !isset($_POST['opinion']) || $_POST['opinion'] == '' 
+  // ||
+  // !isset($_POST['image']) || $_POST['image'] == ''
+){
+  exit('ParamError');
+}
+
+// POSTデータ取得
+$name = $_POST['name'];
+$gender = $_POST['gender'];
+$birthday = $_POST['birthday'];
+$opinion = $_POST['opinion'];
+// $image = isset($_POST['image']) ? $_POST['image'] : '';
+
+// 画像ファイルを同じ階層のフォルダuploadに保存し、パス名を＄imageに代入する
+if (!empty($_FILES['image']['name'])) {
+    // ファイル名の生成
+    $imageName = date('YmdHis') . $_FILES['image']['name'];
+  
+    // 画像をアップロード
+    move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $imageName);
+  
+    // 画像のパスを格納
+    $image = 'upload/' . $imageName;
+} else {
+    // 画像がアップロードされなかった場合
+    $image = null;
+}
+
+
+
+// DB接続
+try{
+  $pdo = new PDO('mysql:dbname=php02;charset=utf8;host=localhost','root','');
+}catch(PDOException $e){
+  exit('DbConnectError:'.$e->getMessage());
+}
+
+// データ登録SQL作成
+$sql="INSERT INTO users(id, name, gender, birthday, opinion, image, indate)VALUES(NULL, :name, :gender, :birthday, :opinion, :image, sysdate())";
+
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(':name', $name, PDO::PARAM_STR);
+$stmt->bindValue(':gender', $gender, PDO::PARAM_INT);
+$stmt->bindValue(':birthday', $birthday, PDO::PARAM_STR);
+$stmt->bindValue(':opinion', $opinion, PDO::PARAM_STR);
+$stmt->bindValue(':image', $image, PDO::PARAM_STR); 
+
+// SQL実行
+$status = $stmt->execute();
+
+// データ登録処理後
+if($status == false){
+  $error = $stmt->errorInfo();
+  exit('QueryError:'.$error[2]);
+}else{  
+  header('Location: index.php');
+  exit;
+}
+?>
+
