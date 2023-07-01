@@ -46,12 +46,14 @@ if($status==false){
       </tr>
       <?php foreach($results as $result): ?>
         <tr>
-          <form action="update.php" method="POST">
+          <form action="update.php" method="POST" enctype="multipart/form-data">
             <td>
-              <?= $result['id']; ?>
+              <p><?= $result['id']; ?></p>
               <input type="hidden" name="id" value="<?= $result['id']; ?>">
             </td>
-            <td><input type="text" name="name" value="<?= $result['name']; ?>"></td>
+            <td>
+              <input type="text" name="name" value="<?= $result['name']; ?>">
+            </td>
             <td>
               <select name="gender" id="">
                 <!-- if文を使うパターン -->
@@ -62,7 +64,7 @@ if($status==false){
             </td>
             <td><input type="date" name="birthday" value="<?= $result['birthday']; ?>"></td>
             <td>
-              <input type="text" value="<?= $result['opinion']; ?>">
+              <input type="text" name="opinion" value="<?= $result['opinion']; ?>">
             </td>
             <td>
               <img src="<?= $result['image']; ?>" alt="">
@@ -73,7 +75,7 @@ if($status==false){
             </td>
           </form>
           <td>
-            <form action="delete.php" method="post">
+            <form action="delete.php" method="GET">
               <input type="hidden" name="id" value="<?php echo $result['id']; ?>">
               <input type="submit" value="削除">
             </form>

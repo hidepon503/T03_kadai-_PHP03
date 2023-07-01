@@ -1,4 +1,33 @@
 <?php
+// 画像ファイルを同じ階層のフォルダuploadに保存し、パス名を＄imageに代入する
+// $image = file_get_contents($_FILES['image']['tmp_name']);
+// $image_type = $_FILES['image']['type'];
+echo '<pre>';
+var_dump($_FILES);
+echo '</pre>';
+exit();
+
+if (!empty($_FILES['image']['name'])) {
+    // ファイル名の生成
+    $imageName = date('YmdHis') . $_FILES['image']['name'];
+  // var_dump($imageName);
+    // 画像をアップロード
+    move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $imageName);
+  // var_dump($_FILES['image']['tmp_name']);
+    // 画像のパスを格納
+    $image = 'upload/' . $imageName;
+    // var_dump($image);
+    // exit();
+} else {
+    // 画像がアップロードされなかった場合
+    $image = null;
+}
+// var_dump($image);
+// var_dump($_FILES['image']['name']);
+// exit();
+
+
+
 // POSTできたリクエスト内容の入力チェック(受信確認処理追加)。エラー表示は。
 if(
   !isset($_POST['name']) || $_POST['name'] == '' ||
@@ -18,20 +47,7 @@ $birthday = $_POST['birthday'];
 $opinion = $_POST['opinion'];
 // $image = isset($_POST['image']) ? $_POST['image'] : '';
 
-// 画像ファイルを同じ階層のフォルダuploadに保存し、パス名を＄imageに代入する
-if (!empty($_FILES['image']['name'])) {
-    // ファイル名の生成
-    $imageName = date('YmdHis') . $_FILES['image']['name'];
-  
-    // 画像をアップロード
-    move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $imageName);
-  
-    // 画像のパスを格納
-    $image = 'upload/' . $imageName;
-} else {
-    // 画像がアップロードされなかった場合
-    $image = null;
-}
+
 
 
 
