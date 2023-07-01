@@ -22,7 +22,7 @@
       </tr>
       <tr>
         <th>写真</th>
-        <td><input type="file" name="image"></td>
+        <td><input type="file" name="image" accept="image/*"></td>
       </tr>
       <tr>
         <th></th>

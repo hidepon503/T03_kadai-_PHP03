@@ -1,31 +1,19 @@
 <?php
-// 画像ファイルを同じ階層のフォルダuploadに保存し、パス名を＄imageに代入する
-// $image = file_get_contents($_FILES['image']['tmp_name']);
-// $image_type = $_FILES['image']['type'];
-echo '<pre>';
-var_dump($_FILES);
-echo '</pre>';
-exit();
+// 元のファイルの拡張子を取得
+$file_ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
 
-if (!empty($_FILES['image']['name'])) {
-    // ファイル名の生成
-    $imageName = date('YmdHis') . $_FILES['image']['name'];
-  // var_dump($imageName);
-    // 画像をアップロード
-    move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $imageName);
-  // var_dump($_FILES['image']['tmp_name']);
-    // 画像のパスを格納
-    $image = 'upload/' . $imageName;
-    // var_dump($image);
-    // exit();
-} else {
-    // 画像がアップロードされなかった場合
-    $image = null;
-}
-// var_dump($image);
-// var_dump($_FILES['image']['name']);
+// タイムスタンプとランダムな文字列を組み合わせてファイル名を作成
+// uniqid関数は一意なIDを生成し、rand関数は乱数を生成する
+$img_name = uniqid(rand(),true) . '.' . $file_ext;
+
+// 画像をアップロード
+move_uploaded_file($_FILES['image']['tmp_name'], 'kadai01/up/' . $img_name);
+// 画像の保存先のパスを$imageに格納。プロジェクトファイルから見た階層のパスになる。create.phpからの階層ではないので注意。
+
+// ＄imageには、画像の保存先のパスが入っている。
+$image = 'kadai01/up/' . $img_name;
+// echo $image;
 // exit();
-
 
 
 // POSTできたリクエスト内容の入力チェック(受信確認処理追加)。エラー表示は。
@@ -45,10 +33,7 @@ $name = $_POST['name'];
 $gender = $_POST['gender'];
 $birthday = $_POST['birthday'];
 $opinion = $_POST['opinion'];
-// $image = isset($_POST['image']) ? $_POST['image'] : '';
-
-
-
+$image = isset($_POST['image']) ? $_POST['image'] : '';
 
 
 // DB接続

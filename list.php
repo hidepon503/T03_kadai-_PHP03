@@ -26,10 +26,8 @@ if($status==false){
   }
 }
 
+
 ?>
-
-
-
 <section class="favorite_container">
   <h2>ご意見一覧</h2>
   <div class="favorite_list">
@@ -67,8 +65,8 @@ if($status==false){
               <input type="text" name="opinion" value="<?= $result['opinion']; ?>">
             </td>
             <td>
-              <img src="<?= $result['image']; ?>" alt="">
-              <input type="file" name="image" >
+              <img src="<?= $result['image']; ?>" style="width:auto; height:240px;" alt="">
+              <input type="file" name="image" accept="image/*">
             </td>
             <td>
                 <input type="submit" value="更新">
