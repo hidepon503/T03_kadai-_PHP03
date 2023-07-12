@@ -34,10 +34,10 @@ if(!empty($_FILES['image']['name'])){
   $img_name = uniqid(rand(),true) . '.' . $file_ext;
 
   // 画像をアップロード
-  move_uploaded_file($_FILES['image']['tmp_name'], 'kadai01/up/' . $img_name);
+  move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $img_name);
 
   // 新しい画像のパスを$imageに格納
-  $image = 'kadai01/up/' . $img_name;
+  $image = 'upload/' . $img_name;
 }else{
   // 画像がアップロードされなかった場合は、元の画像のパスを$imageに格納
   // $image = $_POST['image'];

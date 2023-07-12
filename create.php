@@ -7,11 +7,11 @@ $file_ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
 $img_name = uniqid(rand(),true) . '.' . $file_ext;
 
 // 画像をアップロード
-move_uploaded_file($_FILES['image']['tmp_name'], 'kadai01/up/' . $img_name);
+move_uploaded_file($_FILES['image']['tmp_name'], 'upload/' . $img_name);
 // 画像の保存先のパスを$imageに格納。プロジェクトファイルから見た階層のパスになる。create.phpからの階層ではないので注意。
 
 // ＄imageに、画像の保存先のパスを格納することでsrc=""で呼び出せるようにしている。
-$image = 'kadai01/up/' . $img_name;
+$image = 'upload/' . $img_name;
 // echo $image;
 // exit();
 
