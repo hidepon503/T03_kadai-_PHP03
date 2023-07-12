@@ -1,0 +1,1 @@
+document.querySelector("h1").classList.add("text-blue-300");
